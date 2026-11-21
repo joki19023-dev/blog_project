@@ -1,0 +1,34 @@
+{% extends 'posts/base.html' %}
+
+{% block title %}Perfil de {{ user.username }} | Mi Blog{% endblock %}
+
+{% block content %}
+<section class="card profile-card">
+    <div class="profile-header">
+        {% if perfil.avatar %}
+            <img src="{{ perfil.avatar.url }}" alt="Avatar de {{ user.username }}" class="profile-avatar">
+        {% endif %}
+        <div>
+            <h1>Perfil de {{ user.get_full_name|default:user.username }}</h1>
+            <p class="post-meta">@{{ user.username }} · {{ user.email }}</p>
+            {% if perfil.biografia %}
+                <p>{{ perfil.biografia }}</p>
+            {% endif %}
+            {% if perfil.link_web %}
+                <p><a href="{{ perfil.link_web }}" target="_blank" rel="noopener noreferrer">{{ perfil.link_web }}</a></p>
+            {% endif %}
+        </div>
+    </div>
+
+    <hr class="profile-divider">
+
+    <h2>Actualizar Perfil</h2>
+    <form method="post" enctype="multipart/form-data" class="post-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'posts/base.html' %}
+
+{% block title %}Registro de Usuario | Mi Blog{% endblock %}
+
+{% block content %}
+<section class="card form-card auth-card">
+    <h1>Crear Cuenta de Autor</h1>
+    <p class="form-subtitle">Registrate para publicar artículos y configurar tu perfil con biografía y avatar.</p>
+
+    <form method="post" enctype="multipart/form-data" class="post-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Registrarme</button>
+            <a href="{% url 'login' %}" class="btn btn-secondary">Ya tengo cuenta</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

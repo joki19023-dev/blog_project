@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mi Blog{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'posts/css/estilos.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="{% url 'lista_posts' %}" class="brand">Blog de Economía &amp; Datos</a>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <ul>
+                    <li><a href="{% url 'lista_posts' %}">Inicio</a></li>
+                    <li><a href="{% url 'acerca' %}">Acerca de</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'crear_post' %}">+ Nuevo Post</a></li>
+                        <li><a href="{% url 'perfil_usuario' %}">Mi Perfil ({{ user.username }})</a></li>
+                        <li>
+                            <form action="{% url 'logout' %}" method="post" class="inline-logout-form">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-logout-btn">Cerrar Sesión</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+                        <li><a href="{% url 'registro' %}">Registrarse</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Joaquín Ignacio Florio · Desarrollado con Django (Auth, Perfiles &amp; CRUD)</p>
+        </div>
+    </footer>
+</body>
+</html>
